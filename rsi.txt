@@ -1,0 +1,36 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © tenbabagu
+
+//@version=4
+//RSI
+
+
+study("RSI")
+
+//1. Overbought (>upper_val) => sold /Oversold
+//2. Bullish RSI Divergence – When price makes a new low but RSI makes a higher low; Bearish RSI Divergence – When price makes a new high but RSI makes a lower high.
+//for rule 2, another diff option, it cannot predict a price reversal but just a trend.
+//3. Failure Swings.
+// Bullish Failure Swing
+// RSI drops below 30 (considered oversold).
+// RSI bounces back above 30.
+// RSI pulls back but remains above 30 (remains above oversold)
+// RSI breaks out above its previous high.
+
+
+
+day_range = 14  //the peroid length for RSI
+upper_val = 70
+lower_val = 30
+
+hline(upper_val, "Upper Band", color=#C0C0C0)
+hline(lower_val, "Lower Band", color=#C0C0C0)
+
+change = change(close)
+gain = change >= 0 ? change : 0.0
+loss = change < 0 ? (-1) * change : 0.0
+avgGain = rma(gain, day_range)
+avgLoss = rma(loss, day_range)
+rs = avgGain / avgLoss
+rsi = 100 - (100 / (1 + rs))
+plot(rsi)
