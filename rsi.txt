@@ -18,25 +18,40 @@ study("RSI")
 // RSI breaks out above its previous high.
 
 
+show_buy = false
+show_rsi = true
 
 day_range = 14  //the peroid length for RSI
 upper_val = 70
 lower_val = 30
 
-hline(upper_val, "Upper Band", color=#C0C0C0)
-hline(lower_val, "Lower Band", color=#C0C0C0)
+// hline(upper_val, "Upper Band", color=#C0C0C0)
+// hline(lower_val, "Lower Band", color=#C0C0C0)
 
-change = change(close)
-gain = change >= 0 ? change : 0.0
-loss = change < 0 ? (-1) * change : 0.0
-avgGain = rma(gain, day_range)
-avgLoss = rma(loss, day_range)
-rs = avgGain / avgLoss
-rsi = 100 - (100 / (1 + rs))
-plot(rsi)
+// my code
+// change = change(close)
+// gain = change >= 0 ? change : 0.0
+// loss = change < 0 ? (-1) * change : 0.0
+// avgGain = rma(gain, day_range)
+// avgLoss = rma(loss, day_range)
+// rs = avgGain / avgLoss
+// rsi = 100 - (100 / (1 + rs))
+// plot(rsi)
 
 // the following is built-in function
-// plot(rsi(close, 7)) // day length
+
+
+//plot(rsi(close, day_range)) 
+
+plot(close)
+rsi_ = rsi(close, day_range)
+overbuy = rsi_ > upper_val
+oversell = rsi_ < lower_val
+buy = oversell
+sell = overbuy
+plotshape(buy,  title= "Buy", location=location.belowbar, color=color.green, style=shape.triangleup, text="BUY")
+plotshape(sell,  title= "Sell", location=location.abovebar, color=color.red, style=shape.triangledown, text="SELL")
+
 
 // // // same on pine, but less efficient
 // // pine_rsi(x, y) => 
