@@ -34,3 +34,16 @@ avgLoss = rma(loss, day_range)
 rs = avgGain / avgLoss
 rsi = 100 - (100 / (1 + rs))
 plot(rsi)
+
+// the following is built-in function
+// plot(rsi(close, 7)) // day length
+
+// // // same on pine, but less efficient
+// // pine_rsi(x, y) => 
+// //     u = max(x - x[1], 0) // upward change
+// //     d = max(x[1] - x, 0) // downward change
+// //     rs = rma(u, y) / rma(d, y)
+// //     res = 100 - 100 / (1 + rs)
+// //     res
+
+// // plot(pine_rsi(close, 7))
