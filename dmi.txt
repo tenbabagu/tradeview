@@ -1,0 +1,28 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © tenbabagu
+
+//@version=4
+
+// Bullish DI Cross
+// ADX must be over 25 (strong trend. The value is determined by trader)
+// The +DI crosses above the -DI.
+// Stop Loss should be set at the current day's low. The signal should not be abandoned, if the low is not breached, even if the -DI crosses above the +DI
+// The signal strengthens if ADX rises.
+// If ADX strengthens, trader's should employ a trailing stop.
+
+// Bearish DI Cross
+// ADX must be over 25 (strong trend. The value is determined by trader)
+// The -DI crosses above the +DI.
+// Stop Loss should be set at the current day's high. The signal should not be abandoned, if the high is not breached, even if the +DI crosses above the -DI
+// The signal strengthens if ADX rises.
+// If ADX strengthens, trader's should employ a trailing stop.
+
+
+study(title="Directional Movement Index", shorttitle="DMI", format=format.price, precision=4)
+len = input(14, minval=1, title="DI Length")
+lensig = input(1, title="ADX Smoothing", minval=1, maxval=50)
+[diplus, diminus, adx] = dmi(len, lensig)
+plot(adx, color=color.blue, title="ADX")
+plot(diplus, color=color.green, title="+DI")
+plot(diminus, color=color.red, title="-DI")
+hline(25, "Trend threshold", color=#C0C0C0)
