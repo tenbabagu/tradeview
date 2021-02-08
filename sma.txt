@@ -1,0 +1,29 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © tenbabagu
+
+//@version=4
+study("SMA")
+
+//tutorial's example is 50/200
+long_day_length = 10
+short_day_length = 50
+
+src = input(close, title="Source")
+plot(src)
+
+long = sma(src, long_day_length)
+short = sma(src, short_day_length)
+
+plot(short, color=color.purple, title="Short MA", transp=30)
+plot(long, color=color.green, title="Long MA", transp=30)
+
+
+bull = short > long and short[1] < long[1]
+bear = short < long and short[1] > long[1]
+plotshape(bull,  title= "bull", location=location.belowbar, color=color.green, style=shape.triangleup, text="bull")
+plotshape(bear,  title= "bear", location=location.abovebar, color=color.red, style=shape.triangledown, text="bear")
+
+
+
+
+
